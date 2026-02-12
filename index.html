@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dapur Salsa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-pink-50 min-h-screen pb-24">
+
+<!-- HEADER -->
+<header class="bg-gray-100 text-black px-4 py-3 flex justify-between items-center shadow-md sticky top-0 z-50">
+
+  <div class="flex items-center gap-2">
+    <img src="assets/Logo.png" class="h-12               w-auto" loading="eager">
+  </div>
+
+  <button onclick="toggleCart()" 
+    class="bg-white text-pink-500 px-4 py-2 rounded-lg font-semibold">
+    🛒 (<span id="cart-count">0</span>)
+  </button>
+
+</header>
+
+<!-- PRODUK -->
+<section id="product-list"
+  class="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
+</section>
+
+<!-- OVERLAY -->
+<div id="overlay"
+  class="hidden fixed inset-0 bg-black bg-opacity-40 z-40"
+  onclick="toggleCart()">
+</div>
+
+<!-- CART -->
+<aside id="cart"
+  class="hidden fixed right-0 top-0 w-full sm:w-80 h-full bg-white shadow-xl p-4 overflow-y-auto z-50">
+
+  <h2 class="text-xl font-bold mb-4">Keranjang</h2>
+
+  <div id="cart-items"></div>
+
+  <p class="font-bold mt-4">
+    Total: Rp <span id="total">0</span>
+  </p>
+
+  <div class="mt-4 space-y-2">
+    <input id="customer-name" type="text" placeholder="Nama Anda"
+      class="w-full border p-2 rounded">
+
+    <textarea id="customer-address" placeholder="Alamat Lengkap"
+      class="w-full border p-2 rounded"></textarea>
+  </div>
+
+  <button onclick="checkout()" 
+    class="bg-green-500 text-white w-full py-2 rounded mt-4">
+    Checkout via WhatsApp
+  </button>
+
+  <button onclick="toggleCart()" 
+    class="bg-gray-400 text-white w-full py-2 rounded mt-2">
+    Tutup
+  </button>
+
+</aside>
+
+  <!-- FOOTER -->
+<footer class="bg-gray-100 text-black text-center py-3 shadow-md">
+  <p>© Code By Bx4ye</p>
+</footer>
+  
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
