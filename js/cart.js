@@ -28,37 +28,58 @@ function updateCart() {
   let count = 0;
 
   cart.forEach(item => {
-    total += item.price * item.qty;
-    count += item.qty;
+    const subtotal = Number(item.price) * Number(item.qty);
+    total += subtotal;
+    count += Number(item.qty);
 
     container.innerHTML += `
-      <div class="flex justify-between mb-2">
-        <div>
-          <p class="font-semibold">${item.name}</p>
-          <p>Rp ${formatRupiah(item.price)} x ${item.qty}</p>
-        </div>
-        <div>
-          <button onclick="changeQty(${item.id}, -1)" class="px-2 bg-gray-200">-</button>
-          <button onclick="changeQty(${item.id}, 1)" class="px-2 bg-gray-200">+</button>
-        </div>
-      </div>
-    `;
+  <div class="flex justify-between items-center mb-3 border-b pb-2">
+
+    <div class="flex-1">
+      <p class="font-semibold">${item.name}</p>
+      <p class="text-sm text-gray-500">
+        Rp ${formatRupiah(item.price)}
+      </p>
+    </div>
+
+    <input 
+      type="number"
+      min="1"
+      value="${item.qty}"
+      onchange="updateQty(${item.id}, this.value)"
+      class="w-16 border text-center rounded p-1"
+    >
+
+    <button 
+      onclick="removeItem(${item.id})"
+      class="ml-2 text-red-500 font-bold">
+      ❌
+    </button>
+
+  </div>
+`;
   });
 
   totalElement.innerText = formatRupiah(total);
   countElement.innerText = count;
 }
 
-function changeQty(id, amount) {
+function updateQty(id, value) {
   const item = cart.find(i => i.id === id);
   if (!item) return;
 
-  item.qty += amount;
+  let qty = parseInt(value);
 
-  if (item.qty <= 0) {
-    cart = cart.filter(i => i.id !== id);
+  if (isNaN(qty) || qty < 1) {
+    qty = 1;
   }
+  
+  item.qty = qty;
+  updateCart();
+}
 
+function removeItem(id) {
+  cart = cart.filter(item => item.id !== id);
   updateCart();
 }
 
@@ -95,6 +116,6 @@ function checkout() {
   message += `%0ATotal: Rp ${formatRupiah(total)}`;
 
   const phone = "628987493159";
-  
+
   window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
 }
